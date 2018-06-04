@@ -1,0 +1,78 @@
+\section{Trainingsvorgang}
+
+\subsection{Trainingsvorgang}
+Der Trainingsvorgang basiert auf ein vollständig verbundenes mehrschichtiges Deep  Learning-Netzwerk mit einem Feed-Forward-Prinzip. Hier existieren die Schichten:
+\begin{description}
+	\item Input-Schicht
+	\item Hidden-Schicht 
+	\item Output-Schicht
+\end{description}
+Die Input-Schicht stellt dabei die Eingangsdaten dar, welche als Trainingsmaterial für das Training gelten. Bei den Eingangsdaten handelt es sich um die vorverarbeiteten Sprachaufnahmen In der Hidden-Layer-Schicht geschieht das eigentlich Training, welches normalerweise durch die Sigmund-Freud-Funktion aktiviert wird \cite{bishop:2006}.
+\begin{equation*}
+sigm(x) :=\frac{ 1 }{1+e^{-x}  }
+\label{normal}
+\end{equation*}
+Die Ableitung dieser Funktion gibt Hinweise, die wiederum Nachteile sich bringt. 
+\begin{equation*}
+sigm(x)':= \frac{ e^{x} }{(e^{x} +1)^2  }
+\label{ableitung}
+\end{equation*}
+Beim Backpropagation wird die Ableitung benötigt. Das ist ein Verfahren, welches zur Fehlerrückführung dient. Es wird als Verallgemeinerung der Delta-Regeln auf mehrschichtige neuronale Netze angewandt. Hier entsteht ein Lernverlust bis zu 25 Prozent. Da bei der Sprachverarbeitung viel Daten anfallen, würde der Trainingsverlust zu groß sein. Somit wäre das Lernen nicht mehr effizient, welches in \ref{fig:features11.0} dargestellt ist \cite{Kulbear.2017}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.0\linewidth]{images/sigmund}
+	\caption{Darstellung der Sigmund-Freud-Funktion und dessen Ableitung \cite{Kulbear.2017}} %Generelle
+	\label{fig:features11.0}
+\end{figure}
+Anstelle der Sigmund-Freud-Funktion wird in den modernsten Deep-Learning-Netzen Rectified linear Units (ReLUs) verwendet. Dabei gibt die ReLUs-Funktion bei einem negativen Input-Wert, den Wert null zurück. Bei einem positiven Input-Wert wird dieser als Output-Wert übernommen. Diese Funktion ist dem menschlichen Neuronen ähnlicher und deutlich effizienter \cite{zeiler.2013}. Hinzukommt, dass in die Formel noch die Kantengewichtungen der Neuronen hinzukommen müssen \cite{GonzalezDominguez.2015}.
+\begin{equation*}
+y_{j} = ReLU(x_{j}) = max(0,x_{j}) 
+\label{eq:ReLU}
+%\caption{Rectiefied linear Units als Aktivierungsfunktion}
+\end{equation*}
+\begin{equation}
+x_{ j } = b_{ j } + \sum{ }{ }{ x_{ ij } * y_{j}}
+\label{eq:Gewichte}
+%\caption{Berechnung der Output-Werte anhand der Gewichte und Neuronenwerte}
+\end{equation}
+Dabei werden die Berechnung der Kantengewichte $x_{j}$und Aktivierungsfunktion $x_{j}$ über den Index $j$ gemapped. 
+Die Forschung zeigt, dass ReLUs zu einem viel schnelleren Trainingsvorgang für große Netzwerke führen. Die meisten Frameworks wie TensorFlow und TFLearn machen es einfach, ReLUs auf Hidden-Schicht anzuwenden, sodass diese Implementierungen bereits zur Verfügung gestellt werden. Als nächstes folgt die Output-Schicht, welches die Eingangsdaten dann zu den Klassen zuordnet. Diese Schicht ist als Softlayer konfiguriert, welches die Klassen in eine eindimensionale Matrix kategorisiert. Die Klasse steht für die Sprache, die gelernt werden. Da mehrere Sprachen trainiert werden, werden automatisch die gleiche Anzahl an Klassen benötigt. Die endgültige Sprachidentifikation geschieht über Wahrscheinlichkeitsverteilung, welches in Abbildung \ref{fig:soft} dargestellt wird\cite{Kulbear.2017}.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/softmax}
+	\caption{Klassenzuordnung über Wahrscheinlichkeiten in der Softmax-Konfiguration \cite{Kulbear.2017}} %Generelle
+	\label{fig:soft}
+\end{figure}
+ Dies geschieht durch die Funktion $p(j)$. Dabei steht der Index l für die Klasse, also die Sprache, die gelernt wird.  
+\begin{equation*}
+p(j) := \frac{ exp(x_{j}) }{\sum_{l}{}{ exp(x_{l})} }
+\label{eq:soft}
+\end{equation*}
+Für die Backpropagation wird ebenfalls eine cost function benötigt, welche für Korrektur der Kantengewichte ist. Diese geschieht durch Cross-Entropy-Verlust-Funktion. 
+\begin{equation*}
+C:= \sum_{l}{}{ t_{j} * log(p_{j})} 
+\label{eq:back}
+\end{equation*}
+Dabei misst die Funktion die Leistung des 
+Klassifikationsmodells, dessen Ausgabe. Es handelt sich um ein Wahrscheinlichkeitswert zwischen 0 und 1. Der Cross-Entropy-Verlust nimmt zu, wenn die vorhergesagte Wahrscheinlichkeit von der tatsächlichen Beschriftung abweicht\cite{MLCheatsheet.2017}. Bei $t_{j}$ handelt es sich um die Zielklasse, für die der Verlust berechnet wird \cite{GonzalezDominguez.2015}.
+
+\subsection{Netztopolgie}
+Die Netztopologie beschreibt die Infrastruktur des Netzes. Die Auswahl der Topologie bestimmt die Qualität des Trainingsvorgangs. Aufgrund dessen fallen Topologien von Ansatz zu Ansatz unterschiedlich aus, welche auch unterschiedliche Spracherkennungsresultate liefern. Dafür wird die Topologienvorschlag von Gonzales et al. betrachtet. Für die Eingangsdaten werden 40 Filterbanken verwendet.Um die Menge der Trainingsdaten zu erhöhen,
+ Diese werden benötigt, um die Daten sampilen zu können. Dadurch entsteht eine Menge von Input-Schicht von 26 Knoten. Um unerwünschte Latenzzeiten der Frames zu vermeiden wird ein asymmetrischer Kontext verwendet. Die Hidden-Schichte beträgt hier vier Ebenen mit einer Gesamtzahl von 2560 Units. Die Output-Schicht enthält wie bereits erwähnt eine Softmax-Konfiguration, welche eine Dimension der Anzahl der Zielsprachen besitzt.
+ 
+%\begin{figure*}[h!]
+%	\centering
+%	\includegraphics[width=1.0\linewidth]{images/Output}
+%	\caption{Netztopologie zur  \cite{GonzalezDominguez.2015}} %Generelle
+%	\label{fig:topology}
+%\end{figure*}
+\subsection{Verbesserung des Trainingsverfahrens durch Multitasking learning (MTL)}
+ Bei maschinellem Lernen wird besonders wert gelegt, bestimmte Metriken, wie beispielsweise Klassifizierungs-Genauigkeit und Trainingsdauer, zu optimieren. Daraufhin wird das Modell soweit optimiert bis die Leistung des Modells nicht mehr gesteigert werden kann \cite{Ruder.2017}. Das Lernen  der einzelnen Sprachen läuft sequenziell ab. Hier setzt das multitasking learning ein.  Hier werden mehrere Lernaufgaben gleichzeitig erledigt statt sequentiell, um das Trainingsvefahren effizienter zu gestalten. Das führt zu einer verbesserten Lerneffizienz und Vorhersagegenauigkeit. Im Klassifizierungskontext zielt MTL darauf ab, die Leistung mehrerer Klassifizierungsaufgaben zu verbessern, indem sie gemeinsam erlernt werden \cite{Lu_multitasklearning}. Ein Beispiel hierfür ist ein Spamfilter. Der Schlüssel zur erfolgreichen Anwendung von MTL besteht darin, dass die Aufgaben miteinander verknüpft werden. Dies bedeutet nicht, dass die Aufgaben ähnlich sein müssen. Stattdessen bedeutet es, dass Aufgaben auf verschiedene Ebenen  abstrahiert und geteilt werden. Wenn die Lernaufgaben tatsächlich ähnlich sind, können sie gemeinsam zu gelernt werden. Dabei kann das Wissen zwischen Aufgaben auf andere Lernaufgaben übertragen werden, welches die Effizienz des Trainingsgeschwindigkeits deutlich erhöht. Multitask Learning ist vor allem dann nützlich, wenn die Größe des Trainingssatzes im Vergleich zur Modellgröße klein ist. Dabei wird grundsätzlich zwei Arten von MTL unterschieden: Hard parameter sharing und soft parameter sharing. \\ \\ Hard parameter sharing stellt das meist genutzte Art dar\cite{Ruder.2017}. Es wird normalerweise auf die hidden-Schicht angewendet, indem die Aufgaben gemeinsam gelernt werden, während die spezifischen Aufgaben seperat gelernt werden. Dieser Ansatz reduziert das Risiko von Overfitting erheblich. Je mehr Aufgaben gleichzeitig gelernt wird, desto mehr muss das Modell eine Repräsentation finden, die alle Aufgaben erfassen muss. Dadurch ist die Chance geringer, das Netz zu overfitten.
+  \begin{figure}[h!]
+ 	\centering
+ 	\includegraphics[width=0.8\linewidth]{images/hard}
+ 	\caption{Darstellung der Sigmund-Freud-Funktion und dessen Ableitung \cite{Kulbear.2017}} %Generelle
+ 	\label{fig:hard}
+ \end{figure}
+
