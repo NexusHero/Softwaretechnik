@@ -1,12 +1,12 @@
 \section{Sprachidentifikation}
 \subsection{Überblick}
 Systeme zur Sprachidentifikation werden eingesetzt um die Sprache eines Audiosignals zu klassifizieren. Üblicherweise ist dies der erste Schritt in automatischen multilingualen Spracherkennungssystemen.
-Ohne die richtige Ausgangssprache, können Ausdrücke und Grammatikregeln nicht erkannt werden können \cite{Bartz.2017}.  [1]
-Die Einsatzgebiete lassen sich laut [2] in zwei Kategorien einteilen. Zum Einen ist es die Vorverarbeitung für maschinelle Systeme und zum Anderen für menschliche Zuhörer. Ein Beispiel für ersteres könnte ein sprachgesteuertes System – an einem Flughafen - zur Flugauskunft sein. Ohne menschliches zutun könnte das System zuerst die Sprachidentifikation ausführen und danach mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennen.
+Ohne die richtige Ausgangssprache, können Ausdrücke und Grammatikregeln nicht erkannt werden können \cite{Bartz.2017}.
+Die Einsatzgebiete lassen sich laut \cite{Zissman.2001} in zwei Kategorien einteilen. Zum Einen ist es die Vorverarbeitung für maschinelle Systeme und zum Anderen für menschliche Zuhörer. Ein Beispiel für ersteres könnte ein sprachgesteuertes System – an einem Flughafen - zur Flugauskunft sein. Ohne menschliches zutun könnte das System zuerst die Sprachidentifikation ausführen und danach mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennen.
 Eine Vorverarbeitung für menschliche Zuhörer könnte ein Notrufsystem sein, bei dem zuerst die Sprache des Anrufers erkannt. Anhand dieser wird der Anruf dann an einen Mitarbeiter der für diese Sprache zuständig ist weitergeleitet. Besonders relevant ist solch ein System, da in einem Notfall jede Minute über Leben und Tod entscheiden kann.
 
 \subsection{Wie wird eine Sprache identifiziert?}
-Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen den Sprachen identifiziert werden. [2] nennt hierfür die folgenden Charakteristika:
+Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen den Sprachen identifiziert werden. \cite{Zissman.2001} nennt hierfür die folgenden Charakteristika:
 \begin{itemize}
 \item \textit{Phonologie.} Hier wird die Häufigkeit und Verteilung von Phonemen und Phonen betrachtet. Ein Phonem ist eine abstrakte Repräsentation aller Laute einer Sprache. Ein Phon ist der tatsächlich produzierte Ton, der beim Sprechen entsteht.
 \item \textit{Morphologie.} Sprachen unterscheiden sich in den Wortstämmen, dem Vokabular und der Art, wie Wörter geformt werden.
@@ -15,34 +15,26 @@ Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen de
 \end{itemize}
 
 \subsection{Architektur}
-[3] Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. [3] unterscheidet hierbei zwischen drei möglichen Umsetzungen.
+\cite{Gonzalez.2015} Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. \cite{Gonzalez.2015} unterscheidet hierbei zwischen drei möglichen Umsetzungen.
 
 [4-6] Die erste ist es, ein universelles Modell zu trainieren, indem alle Sprachen als Eingabe möglich sind. Die Hidden Layer eines neuronalen Netzes teilen sich die Repräsentationen für Phoneme und in den Ausgabeschichten wird die Sprache erkannt.
 Vorteile ergeben sich durch die gemeinsame Nutzung von Phonemen. Zwischen den einzelnen Sprachen gibt jeweils gleiche Phoneme, die nicht mehr erneut erlernt werden müssen. Möchte man eine neue Sprache trainieren, so kann man auf die bereits vorhandenen Strukturen aufbauen und diese mitnutzen.
-Das gesamte System wird auch nicht mehr so komplex, wie einzelne monolinguale Systeme [1].
+Das gesamte System wird auch nicht mehr so komplex, wie einzelne monolinguale Systeme \cite{Bartz.2017}.
 
-[7-8] Eine weitere Möglichkeit – der Identifikation einer Sprache – ist der Einsatz eines dedizierten Systems. Anhand eines Teilstückes des Eingabesignals wird die Sprache bestimmt. [7] gibt hierfür eine durchschnittliche Dauer von 2,3 Sekunden an, bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit zunimmt.
-Nach [7] gibt es für ein System zur Sprachidentifikation mehrere Ansätze. Neben dem Einsatz eines Gaussian mixture models (GMM) gibt es auch Systeme die Neuronale Netze einsetzen. Diese beiden können wiederum unterteilt werden in die Erkennung von Wörtern oder Phons.
+[7-8] Eine weitere Möglichkeit – der Identifikation einer Sprache – ist der Einsatz eines dedizierten Systems. Anhand eines Teilstückes des Eingabesignals wird die Sprache bestimmt. \cite{Niesler.2006} gibt hierfür eine durchschnittliche Dauer von 2,3 Sekunden an, bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit zunimmt.
+Nach \cite{Niesler.2006} gibt es für ein System zur Sprachidentifikation mehrere Ansätze. Neben dem Einsatz eines Gaussian mixture models (GMM) gibt es auch Systeme die Neuronale Netze einsetzen. Diese beiden können wiederum unterteilt werden in die Erkennung von Wörtern oder Phons.
 Ein Nachteil der Spracherkennung anhand eines Teilstückes ist eine erhöhte Latenz. Sollte außerdem die Sprache falsch erkannt worden sein, breitet sich der Fehler aus und führt zu einem möglicherweise falschen Endresultat.
 
 [9] Die dritte und zugleich letzte genannte Möglichkeit, setzt auf mehrere monolinguale Spracherkennungssysteme. Das Eingangssignal wird simultan von mehreren Systemen mit jeweils eigenen Modellen verarbeitet.
 Anhand der größten Übereinstimmung mit einer Sprache, wird am Ende dann die passende Sprache ausgewählt. Es werden wiederum die Probleme des vorherigen Ansatzes gelöst und es wird mit einer höheren Sicherheit die richtige Sprache ausgewählt.
 Nachteil ist hierbei der erhöhte Rechenaufwand.
 
-In den nachfolgenden Kapiteln gehen wir von dem ersten Ansatz aus, da es hierzu die aktuellsten Forschungen gibt [3] <<Wo steht noch mehr dazu drin?>>
+In den nachfolgenden Kapiteln gehen wir von dem ersten Ansatz aus, da es hierzu die aktuellsten Forschungen gibt \cite{Gonzalez.2015} <<Wo steht noch mehr dazu drin?>>
 
 \subsection{Ausblick, Fazit, Praktische Umsetzung, Auf was gehen wir ein?}
 Ich weiß noch nicht, was ich hierzu schreiben soll...
 
-[1] https://arxiv.org/abs/1708.04811
-
-[2] https://dl.acm.org/citation.cfm?id=567566
-
-[3] https://ieeexplore.ieee.org/document/6935076/
-
-[4] T. Schultz and A. Waibel, “Language independent and language adaptive
-large vocabulary speech recognition,” in Proc. ICSLP, 1998, vol.
-1998, pp. 1819–1822.
+[4] \cite{Schultz.1998}
 
 [5] H. Lin, L. Deng, J. Droppo, D. Yu, and A. Acero, “Learning methods
 in multilingual speech recognition,” in Proc. NIPS, Vancouver, BC,
@@ -52,10 +44,6 @@ Canada, 2008.
 English queries in Mandarin voice search,” in Proc. IEEE
 Int. Acoust., Speech, Signal Process. (ICASSP), Conf., May 2011,
 pp. 5016–5019.
-
-[7] T. Niesler and D. Willett, “Language identification and multilingual
-speech recognition using discriminatively trained acoustic models,”
-Multilingual Speech Lang. Process., 2006.
 
 [8] H. Caesar, “Integrating language identification to improve multilingual
 speech recognition,” Idiap, Idiap-RR Idiap-RR-24–2012, no. 7,
