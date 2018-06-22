@@ -2,35 +2,44 @@
 \subsection{Überblick}
 Systeme zur Sprachidentifikation werden eingesetzt um die Sprache eines Audiosignals zu klassifizieren. Üblicherweise ist dies der erste Schritt in automatischen multilingualen Spracherkennungssystemen.
 Ohne die richtige Ausgangssprache, können Ausdrücke und Grammatikregeln nicht erkannt werden können \cite{Bartz.2017}.
-Die Einsatzgebiete lassen sich laut \cite{Zissman.2001} in zwei Kategorien einteilen. Zum Einen ist es die Vorverarbeitung für maschinelle Systeme und zum Anderen für menschliche Zuhörer. Ein Beispiel für ersteres könnte ein sprachgesteuertes System – an einem Flughafen - zur Flugauskunft sein. Ohne menschliches Zutun könnte das System zuerst die Sprachidentifikation ausführen und danach mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennen.
+Die Einsatzgebiete lassen sich laut Zissman et al. \cite{Zissman.2001} in zwei Kategorien einteilen. Zum Einen ist es die Vorverarbeitung für maschinelle Systeme und zum Anderen für menschliche Zuhörer. Ein Beispiel für ersteres könnte ein sprachgesteuertes System – an einem Flughafen - zur Flugauskunft sein. Ohne menschliches Zutun könnte das System zuerst die Sprachidentifikation ausführen und danach mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennen.
 Eine Vorverarbeitung für menschliche Zuhörer könnte ein Notrufsystem sein, bei dem zuerst die Sprache des Anrufers erkannt. Anhand dieser wird der Anruf dann an einen Mitarbeiter der für diese Sprache zuständig ist weitergeleitet. Besonders relevant ist solch ein System, da in einem Notfall jede Minute über Leben und Tod entscheiden kann.
 
 \subsection{Wie wird eine Sprache identifiziert?}
-Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen den Sprachen identifiziert werden. \cite{Zissman.2001} nennt hierfür die folgenden Charakteristika:
+Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen den Sprachen identifiziert. Zissman et al. \cite{Zissman.2001} nennt als Unterschiede die folgenden vier Charakteristika:
 \begin{itemize}
 \item \textit{Phonologie.} Hier wird die Häufigkeit und Verteilung von Phonemen und Phonen betrachtet. Ein Phon ist der tatsächlich produzierte Ton, der beim Sprechen entsteht.
 \item \textit{Morphologie.} Sprachen unterscheiden sich in den Wortstämmen, dem Vokabular und der Art, wie Wörter geformt werden.
 \item \textit{Syntax.} Sätze haben in unterschiedlichen Sprachen, unterschiedliche Satzstrukturen.
-\item \textit{Prosodie.} Temp, Rhythmus, Pausen und Tonhöhen unterscheiden sich von Sprache zu Sprache.
+\item \textit{Prosodie.} Tempo, Rhythmus, Pausen und Tonhöhen unterscheiden sich von Sprache zu Sprache.
 \end{itemize}
 
 \subsection{Architektur}
-\cite{Gonzalez.2015} Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. \cite{Gonzalez.2015} unterscheidet hierbei zwischen drei möglichen Umsetzungen.
+Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. Gonzalez-Dominguez et al. \cite{Gonzalez.2015} unterscheidet hierbei zwischen drei möglichen Umsetzungen.
 
-[4-6] Die erste ist es, ein universelles Modell zu trainieren, indem alle Sprachen als Eingabe möglich sind. Die Hidden Layer eines neuronalen Netzes teilen sich die Repräsentationen für Phoneme und in den Ausgabeschichten wird die Sprache erkannt.
-Vorteile ergeben sich durch die gemeinsame Nutzung von Phonemen. Zwischen den einzelnen Sprachen gibt jeweils gleiche Phoneme, die nicht mehr erneut erlernt werden müssen. Möchte man eine neue Sprache trainieren, so kann man auf die bereits vorhandenen Strukturen aufbauen und diese mitnutzen.
-Das gesamte System wird auch nicht mehr so komplex, wie einzelne monolinguale Systeme \cite{Bartz.2017}.
+Die erste ist es, ein universelles Modell zu trainieren, indem alle Sprachen als Eingabe möglich sind. Die Hidden Layer eines neuronalen Netzes teilen sich die Repräsentationen für Phoneme und in den Ausgabeschichten wird die Sprache erkannt \cite{Yu.2014}.
+Vorteile ergeben sich durch die gemeinsame Nutzung von Phonemen. Das funktioniert, da es zwischen den einzelnen Sprachen jeweils gleiche Phoneme gibt, die somit nicht mehr erneut erlernt werden müssen.
+Möchte man eine neue Sprache trainieren, so kann man auf die bereits vorhandenen Strukturen aufbauen und diese mitnutzen.
+Außerdem wird das gesamte System nicht so komplex, wie es mit mehreren einzelnen monolinguale Systeme der Fall wäre \cite{Bartz.2017}.
 
-[7-8] Eine weitere Möglichkeit – der Identifikation einer Sprache – ist der Einsatz eines dedizierten Systems. Anhand eines Teilstückes des Eingabesignals wird die Sprache bestimmt. \cite{Niesler.2006} gibt hierfür eine durchschnittliche Dauer von 2,3 Sekunden an, bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit zunimmt.
-Nach \cite{Niesler.2006} gibt es für ein System zur Sprachidentifikation mehrere Ansätze. Neben dem Einsatz eines Gaussian mixture models (GMM) gibt es auch Systeme die Neuronale Netze einsetzen. Diese beiden können wiederum unterteilt werden in die Erkennung von Wörtern oder Phons.
-Ein Nachteil der Spracherkennung anhand eines Teilstückes ist eine erhöhte Latenz. Sollte außerdem die Sprache falsch erkannt worden sein, breitet sich der Fehler aus und führt zu einem möglicherweise falschen Endresultat.
+Eine weitere Möglichkeit – der Identifikation einer Sprache – ist der Einsatz eines dedizierten Systems. In Abbildung \ref{fig:pipeline} ist dieser Architekturansatz
+dargestellt. Hierbei wird anhand eines Teilstückes des Eingabesignals die Sprache bestimmt. Niesler et al. \cite{Niesler.2006} gibt für dieses Teilstück eine durchschnittliche Dauer von 2,3 Sekunden an,
+bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit zunimmt.
+Für die die konkrete Implementierung eines dedizierten Systems zur Sprachidentifikation gibt es mehrere Ansätze \cite{Niesler.2006}. Neben dem Einsatz eines Gaussian mixture models (GMM) kann man auch Neuronale Netze dafür einsetzen.
+Diese beiden Ansätze können wiederum in zwei Kategorien unterteilt werden; die Erkennung von Wörtern oder von Phons.
+Ein Nachteil der Spracherkennung anhand eines Teilstückes ist eine erhöhte Latenz. Diese kann abhängig von der zu erzielenden Genauigkeit unterschiedlich lang sein.
+Sollte außerdem die Sprache in diesem Schritt falsch erkannt worden sein,
+breitet sich der Fehler aus und führt zu einem möglicherweise falschen Endresultat.
 
-[9] Die dritte und zugleich letzte genannte Möglichkeit, setzt auf mehrere monolinguale Spracherkennungssysteme. Das Eingangssignal wird simultan von mehreren Systemen mit jeweils eigenen Modellen verarbeitet.
-Anhand der größten Übereinstimmung mit einer Sprache, wird am Ende dann die passende Sprache ausgewählt. Es werden wiederum die Probleme des vorherigen Ansatzes gelöst und es wird mit einer höheren Sicherheit die richtige Sprache ausgewählt.
-Nachteil ist hierbei der erhöhte Rechenaufwand.
+Die dritte und zugleich letztgenannte Möglichkeit setzt auf mehrere monolinguale Spracherkennungssysteme \cite{Gonzalez.2015}.
+Das Eingangssignal wird simultan von mehreren Systemen mit jeweils eigenen Modellen verarbeitet.
+Anhand der größten Übereinstimmung mit einer Sprache wird am Ende dann die passende Sprache ausgewählt.
+Das löst die Probleme des vorherigen Ansatzes und mit einer höheren Wahrscheinlichkeit wird die richtige Sprache ausgewählt.
+Nachteilig ist der erhöhte Rechenaufwand durch dein Einsatz mehrerer Systeme.
 
-In den nachfolgenden Kapiteln gehen wir von dem ersten Ansatz aus, da es hierzu die aktuellsten Forschungen gibt \cite{Gonzalez.2015} <<Wo steht noch mehr dazu drin?>>
+In den nachfolgenden Kapiteln gehen wir von dem ersten Ansatz aus, da es das Teilen von Ressourcen ermöglicht, einen einheitlich Ansatz bietet
+und es zunehmendes Interesse in diesem Gebiet gibt \cite{Yu.2014, Hara.2017}.
 
-\subsection{Ausblick, Fazit, Praktische Umsetzung, Auf was gehen wir ein?}
+\subsection{Performance}
 - Werte: welche Architektur ist am besten
 - Auf was gehen wir ein und wieso?
