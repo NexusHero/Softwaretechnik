@@ -1,4 +1,4 @@
-\section{Einführung}\label{sec:introduction}
+\section{Einleitung}\label{sec:introduction}
 \IEEEPARstart{S}ysteme zur Spracherkennung finden eine zunehmende Verbreitung und Beliebtheit im alltäglichen Leben. Das Spektrum dieser Anwendungen ist dabei Vielfältig und reicht vom Diktieren von Nachrichten über das Steuern von Geräten bis hin zum Einsatz in Autos. Dabei ist die Qualität der Spracherkennung und die Reaktion des Systems ein entscheidender Faktor, um die Interaktion so natürlich wie möglich zu gestalten \cite{Yu.2014}. Allerdings ergibt sich hier ein Hindernis für mehrsprachige Nutzer. Die natürliche Interaktion wird dadurch behindert, da viele automatische Spracherkennungssysteme den Anwender auf eine voreingestellte Sprache beschränken. In den meisten herkömmlichen Systemen werden Sprachen sowie Dialekte unabhängig voneinander betrachtet. Es wird für jede Sprache ein separates akustisches Modell trainiert [Paper A Real-Time End-to-End Multilingual Speech Recognition Architecture]. Bei weltweit etwa 7000 gesprochenen Sprachen ist es daher nur konsequent, multilinguale Spracherkennungssysteme zu entwickeln \cite{Gary.2018}. Allerdings erfordert ein solches System einen entsprechenden Satz an markierten Trainingsdaten, um wiederkehrende Muster der Sprache zu erkennen.
 Dieser Umstand sorgt für erhebliche Qualitätsunterschiede zwischen den Sprachen, da nicht alle Sprachen über solche Datensätze verfügen. Um die Knappheit der beschrifteten Trainingsdaten zu kompensieren nutzt man den Ansatz der geteilten Hidden Layer [Paper Using Language Adaptive]. Dieser Ansatz stützt sich auf das Zusammenführen aller Daten, um so eine gemeinsame Nutzung der Phoneme zu gewährleisten.  Phoneme stellen dabei eine abstrakte Repräsentation aller Laute einer Sprache dar \citation{Zissman.2001}. Um genaue akustische Modelle für eine große Anzahl von Sprachen effizient und effektiv zu trainieren, um die Kosten, die beim Training dieser Modelle entstehen zu reduzieren und um neue Anwendungsszenarien zu unterstützen, besteht ein wachsendes Interesse an der Entwicklung mehrsprachiger Spracherkennungssysteme \cite{Yu.2014}.
 Zu Beginn erfolgt eine Erläuterung bestimmter Grundlagen, die für das weitere Verständnis der Arbeit wichtig sind. Darauf aufbauend wird erläutert, wie die Identifikation sowie die Erkennung von Sprachen funktioniert. Anschließend werden die Recurrent Neural Networks sowie deren Erweiterung, die Long short-term memory-Netzwerke beschrieben, welche heute im Bereich der multilingalen Spracherkennung verwendet werden. Dabei wird beleuchtet, wie dieses funktioniert und welche Vorteile gegenüber anderen tiefen neuronalen Netzen bestehen. Das Training eines solchen Modells folgt im Anschluss mit einer abschließenden Diskussion bezüglich weiterhin bestehender Probleme und zukünftiger Ansätze.
@@ -7,7 +7,7 @@ Zu Beginn erfolgt eine Erläuterung bestimmter Grundlagen, die für das weitere 
 Dieses Kapitel stellt exemplarisch wichtige Arbeiten vor, welche mit dem Thema des Artikels in Beziehung stehen. Es gibt viele Forschungsarbeiten auf dem Gebiet der mehrsprachigen und sprachübergreifenden Spracherkennung. Der Artikel konzentriert sich allerdings nur auf diejenigen, die Recurrent Neural Networks bzw. LSTM-Netzwerke verwenden. Der Schwerpunkt dieser Arbeit liegt bei dem Untersuchen dieser Verfahren zur Realisierung entsprechender Systeme sowie die sich hier ergebenden Vorteile gegenüber bisheriger Verfahren. Dabei wird kein detaillierter Vergleich verschiedener Modelle aufgeführt.
 Die Abhandlung lehnt an das Werk Automatic Speech Recognition - A Deep Learning Approach von Dong Yu und Li Deng \cite{Yu.2014} an. Das Buch liefert einen genauen Überblick über die Thematik. Die Grundlagen bezüglich automatischer Spracherkennungssysteme, konventioneller Ansätze und Trainingsverfahren sowie die Architektur mehrsprachiger Systeme werden hier beschrieben.
 Ein weiteres für diesen Artikel interessantes Werk ist das Buch Sprachverarbeitung von Beat Pfister und Tobias Kaufmann, in welchem Grundlagen und Methoden der Sprachsynthese und Spracherkennung genau beschrieben werden.
-Des Weiteren gibt
+Des Weiteren gibt es die Arbeit von (...) [https://arxiv.org/abs/1703.07090]. Hier wird ein alternatives LSTM-Netzwerk vorgeschlagen, welches den konventionellen Ansatz übertrifft.
 
 
 \section{Hintergrund}
@@ -16,12 +16,12 @@ Die drei Modelle werden von \cite{Tom.2016} wie folgt beschrieben:
 
 \begin{itemize}
     \item \textit{Akkustikmodell.} Die Menge an Daten, die das neuronale Netz darüber informiert wie die Zusammenhänge zwischen Phonemen und einem konkreten Audiosignal sind. Die Phoneme können
-                    sowohl kontextabhängig als auch kontextfrei sein.
-                    Erlernt wird das Modell durch Audioaufnahmen und den zugehörigen Abschriften – die akkustischen Trainingsdaten.
+    sowohl kontextabhängig als auch kontextfrei sein.
+    Erlernt wird das Modell durch Audioaufnahmen und den zugehörigen Abschriften – die akkustischen Trainingsdaten.
     \item \textit{Lexikalmodell.} Dieses Modell bildet eine Sequenz von Phonemen – die durch das Akustikmodell gewonnenen wurden – auf gültige Wörter einer Sprache ab. Hierfür werden textuelle Trainingsdaten eingesetzt.
     \item \textit{Sprachmodell.} Die Wahrscheinlichkeit für einen syntaktisch und semantisch korrekten Satz wird genutzt um aus Sequenzen von Wörtern – die durch das Lexikalmodell gewonnen wurden – gültige Wortsequenzen zu bilden.
-                    Beispielsweise folgt auf das englische Wort \glqq{thank}\grqq{} mit einer sehr hohen Wahrscheinlichkeit das Wort \glqq{you}\grqq{} oder
-                    \glqq{god}\grqq{}. Für das Training dieses Modells werden textuelle Trainingsdaten eingesetzt.
+    Beispielsweise folgt auf das englische Wort \glqq{thank}\grqq{} mit einer sehr hohen Wahrscheinlichkeit das Wort \glqq{you}\grqq{} oder
+    \glqq{god}\grqq{}. Für das Training dieses Modells werden textuelle Trainingsdaten eingesetzt.
 \end{itemize}
 
 Jedes dieser drei Modelle muss separat trainiert werden. Das führt zu einer erhöhten Komplexität verglichen mit dem Trainieren eines einzelnen gemeinsamen Modells.

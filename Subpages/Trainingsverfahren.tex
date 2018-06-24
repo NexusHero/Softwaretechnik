@@ -1,4 +1,5 @@
 \section{Trainingsvorgang}
+Einleitender Satz oder Abschnitt ins Training...
 
 \subsection{Trainingsvorgang}
 Der Trainingsvorgang basiert auf ein vollständig verbundenes mehrschichtiges Deep Learning-Netzwerk. Dieses Netzwerk aus Neuronen besteht aus drei Schichten:
@@ -7,7 +8,7 @@ Der Trainingsvorgang basiert auf ein vollständig verbundenes mehrschichtiges De
 	\item Hidden-Schicht 
 	\item Output-Schicht
 \end{description}
-Die Input-Schicht stellt dabei die Eingangsdaten dar, welche als Trainingsmaterial für den Trainingsvorgang verwendet werden. Bei diesen Daten handelt es sich um Sprachaufnahmen. Bei Bedarf können diese Sprachaufnahmen dementsprechend vor-verarbeitet werden, wie zum Beispiel durch Einsatz von Filtern. Anschließend können die Daten in die Netztopologie beschriftet eingespeist werden. Eine Vorklassifizierung der Sprache führt zu erhöhten Erkennungsrate \cite{bishop.2006}. In der Hidden-Schicht geschieht das eigentlich Training, welches normalerweise durch die Sigmoid-Funktion aktiviert wird \cite{bishop.2006}. Die Schichten sind durch Kanten miteinander verbunden. Die Hier wird das Netz beginnend von der Input-Schicht bis Output-Schicht vollständig durchlaufen.
+Die Input-Schicht stellt dabei die Eingangsdaten dar, welche als Trainingsmaterial für den Trainingsvorgang verwendet werden. Bei diesen Daten handelt es sich um Sprachaufnahmen. Bei Bedarf lassen sich diese Aufnahmen über entsprechende Filter vorverarbeiten. Anschließend können beschriftete Daten in die Netztopologie eingespeist werden. Eine Vorklassifizierung der Sprache führt zu erhöhten Erkennungsrate \cite{bishop.2006}. In den Hidden Layer geschieht das Training, welches durch die Sigmoid-Funktion aktiviert wird \cite{bishop.2006}. Die Schichten sind durch Kanten miteinander verbunden. Die Hier wird das Netz beginnend von der Input-Schicht bis Output-Schicht vollständig durchlaufen.
 \begin{equation*}
 sigm(x) :=\frac{ 1 }{1+e^{-x}  }
 \label{normal}
