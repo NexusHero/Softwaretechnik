@@ -1,32 +1,30 @@
 \section{Trainingsvorgang}
 
 \subsection{Trainingsvorgang}
-Der Trainingsvorgang basiert auf ein vollständig verbundenes mehrschichtiges Deep Learning-Netzwerk mit einem Feed-Forward-Prinzip. Hier existieren die Schichten:
+Der Trainingsvorgang basiert auf ein vollständig verbundenes mehrschichtiges Deep Learning-Netzwerk. Dieses Netzwerk aus Neuronen besteht aus drei Schichten:
 \begin{description}
 	\item Input-Schicht
 	\item Hidden-Schicht 
 	\item Output-Schicht
 \end{description}
-Die Input-Schicht stellt dabei die Eingangsdaten dar, welche als Trainingsmaterial für den Trainingsvorgang verwendet werden. Bei diesen Daten handelt es sich um Sprachaufnahmen. Bei Bedarf können diese Sprachaufnahmen dementsprechend vor-verarbeitet werden, wie zum Beispiel durch Einsatz von Filtern. Anschließend können die Daten in die Netztopologie eingespeist werden. In der Hidden-Schicht geschieht das eigentlich Training, welches normalerweise durch die Sigmoid-Funktion aktiviert wird \cite{bishop.2006}.
+Die Input-Schicht stellt dabei die Eingangsdaten dar, welche als Trainingsmaterial für den Trainingsvorgang verwendet werden. Bei diesen Daten handelt es sich um Sprachaufnahmen. Bei Bedarf können diese Sprachaufnahmen dementsprechend vor-verarbeitet werden, wie zum Beispiel durch Einsatz von Filtern. Anschließend können die Daten in die Netztopologie beschriftet eingespeist werden. Eine Vorklassifizierung der Sprache führt zu erhöhten Erkennungsrate \cite{bishop.2006}. In der Hidden-Schicht geschieht das eigentlich Training, welches normalerweise durch die Sigmoid-Funktion aktiviert wird \cite{bishop.2006}. Die Schichten sind durch Kanten miteinander verbunden. Die Hier wird das Netz beginnend von der Input-Schicht bis Output-Schicht vollständig durchlaufen. 
 \begin{equation*}
 sigm(x) :=\frac{ 1 }{1+e^{-x}  }
 \label{normal}
 \end{equation*}
-Die Ableitung dieser Funktion gibt Hinweise, die wiederum Nachteile mit sich bringen.
+Sobald die Output-Schicht erreicht ist, wird das Netz rückwärts durchlaufen. Dieses Verfahren wird auch Backpropagation-Algorithmus genannt und wird benötigt, um fehlerhafte Kantengewichte herauszufinden und anzupassen. Die Kantengewichte des Netzes werden anfangs mit null initialisiert, sodass die Kantengewichtungen korrigiert werden müssen. Die Ableitung der Sigmoid-Funktion kommt bei der Korrekturberechnung zum Einsatz \ref{ableitung}. Diese Funktion ist für eine geringe Datenmenge geeignet. Bei größeren Datenmengen entsteht ein Nachteil, welches sich auf die Wissensausprägung des Netzes auswirkt. Beim Rückwärts durchlaufen entsteht ein Wissensverlust \cite{bishop.2006}. Dieser Verlust wird durch das Maxima der Ableitung der verwendeten Funktion repräsentiert. Dieser kann bis zu 25 \% betragen. Der entstehende Verlust würde die Klassifizierungsrate des Trainingsmodels reduzieren, welches in Abbildung \ref{fig:features11.0} dargestellt ist \cite{Kulbear.2017}.
 \begin{equation*}
 sigm(x)':= \frac{ e^{x} }{(e^{x} +1)^2  }
 \label{ableitung}
 \end{equation*}
-Hierbei werden die Schichten durchlaufen, welches das Training darstellt. 
-Beim Backpropagation-Algorithmus wird das Netz rückwärts berechnet. Hierzu wird die Ableitung der Sigmoid-Funktion benötigt. Dieses Verfahren wird benötigt, um fehlerhafte Kantengewichte zu finden und anzupassen. Bei dieser Anpassung  Hier kann ein Lernverlust bis zu maximal 25 Prozent entstehen, welches das Maxima von $sigm(x)'$ repräsentiert. Da bei der Sprachverarbeitung eine große Datenmenge anfallen, könnte der Trainingsverlust zu groß sein.  Somit wäre das Lernen nicht mehr effizient, welches in \ref{fig:features11.0} dargestellt ist \cite{Kulbear.2017}.
+
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\linewidth]{images/sigmund}
 	\caption{Darstellung der Sigmoid-Funktion und dessen Ableitung \cite{Kulbear.2017}} %Generelle
 	\label{fig:features11.0}
 \end{figure}
-Anstelle der Sigmoid-Funktion wird in den modernsten Deep-Learning-Netzen Rectified linear Units ($ReLUs$) verwendet. Dabei gibt diese Funktion bei einem negativen Input-Wert, den Wert null zurück. Bei einem positiven Input-Wert wird dieser als Output-Wert übernommen. Diese Funktion ist menschlichen Neuronen am ähnlichsten und bringt zudem eine effizientere Verarbeitungsgeschwindigkeit \cite{zeiler.2013}. Hinzukommt, dass in die Formel noch die Kantengewichtungen der Neuronen benötigt werden. Aktivierungsfunktion $x_{j}$ über den Index $j$ gemapped.
-Die meisten Frameworks wie TensorFlow und TFLearn machen es einfach, ReLUs auf Hidden-Schicht anzuwenden, sodass diese Implementierungen bereits zur Verfügung gestellt werden. \cite{GonzalezDominguez.2015}.
+Anstelle der Sigmoid-Funktion wird in den modernsten Deep-Learning-Netzen Rectified linear Units ($ReLUs$) verwendet. Diese Funktion ist dem menschlichen Neuron am ähnlichsten und bringt zudem eine erhöhte Verarbeitungsgeschwindigkeit mit sich \cite{zeiler.2013}. Frameworks wie TensorFlow und TFLearn stellen diese Funktionalität bereits standardmäßig zur Verfügung, sodass diese Funktion nicht selber implementiert werden muss.
 \begin{equation*}
 y_{j} = ReLU(x_{j}) = max(0,x_{j}) 
 \label{eq:ReLU}
@@ -37,7 +35,7 @@ x_{ j } = b_{ j } + \sum{ }{ }{ x_{ ij } * y_{j}}
 \label{eq:Gewichte}
 %\caption{Berechnung der Output-Werte anhand der Gewichte und Neuronenwerte}
 \end{equation}
-Als nächstes folgt die Output-Schicht, welches die Eingangsdaten dann zu den Klassen (Vorhersagen) zuordnet. Diese Schicht ist als Softlayer konfiguriert, welches die Klassen in eine eindimensionale Matrix kategorisiert. Eine Klasse steht für eine Sprache, die gelernt werden soll. Dabei ist die Matrix in dem Zahlenintervall $[0,1]$ normalisiert. Die endgültige Sprachidentifikation geschieht über normalisierten Werte, welches in Abbildung \ref{fig:soft} dargestellt werden. Diese können in Wahrscheinlichkeits-Werte umgerechnet werden\cite{Kulbear.2017}.
+Als Nächstes folgt die Output-Schicht, welches die Eingangsdaten dann zu den Klassen (Vorhersagen) zuordnet. Diese Schicht ist als Softlayer konfiguriert, welches die Klassen in eine eindimensionale Matrix kategorisiert. Eine Klasse steht für eine Sprache, die gelernt werden soll. Dabei ist die Matrix in dem Zahlenintervall $[0,1]$ normalisiert. Die endgültige Sprachidentifikation geschieht über normalisierte Werte, welches in Abbildung \ref{fig:soft} dargestellt wird. Die Werte können in Wahrscheinlichkeiten ausgedrückt werden, in dem diese mit dem Faktor 100 multipliziert werden \cite{Kulbear.2017}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/softmax}
@@ -49,16 +47,15 @@ Als nächstes folgt die Output-Schicht, welches die Eingangsdaten dann zu den Kl
 p(j) := \frac{ exp(x_{j}) }{\sum_{l}{}{ exp(x_{l})} }
 \label{eq:soft}
 \end{equation*}
-Für den vorhin erwähnten Backpropagation-Algorithmus wird ebenfalls eine Kostenfunktion benötigt, welche für Korrektur der Kantengewichte ist. Diese geschieht durch Cross-Entropy-Loss-Funktion. 
+Für den vorhin erwähnten Backpropagation-Algorithmus wird ebenfalls eine Kostenfunktion benötigt. Diese geschieht durch Cross-Entropy-Loss-Funktion. 
 \begin{equation*}
 C:= \sum_{l}{}{ t_{j} * log(p_{j})} 
 \label{eq:back}
 \end{equation*}
-Diese die Funktion misst die Abweichungen der Kantengewichte der Netztopologie und passt diese rückwirkend an. Der Cross-Entropy-Verlust nimmt zu, wenn der vorhergesagte Wert von der tatsächlichen Beschriftung abweicht\cite{MLCheatsheet.2017}. Bei $t_{j}$ handelt es sich um die Klasse, für die der Verlust berechnet wird \cite{GonzalezDominguez.2015}.
+Diese Funktion misst die Abweichungen der Kantengewichte der Netztopologie und passt diese rückwirkend an. Der Cross-Entropy-Verlust nimmt zu, wenn der vorhergesagte Wert von der tatsächlichen Beschriftung (label) abweicht \cite{MLCheatsheet.2017}. Bei $t_{j}$ handelt es sich um die Klasse, für die der Verlust berechnet wird \cite{GonzalezDominguez.2015}.
 
 \subsection{Netztopologie}
-Die Netztopologie beschreibt die Infrastruktur des Netzes. Die Auswahl der Topologie bestimmt die Qualität des Trainingsvorgangs. Aufgrund dessen fallen Topologien von Ansatz zu Ansatz unterschiedlich aus, welche auch unterschiedliche Spracherkennungsresultate liefern. Dafür wird der Topologienvorschlag von Gonzales et al. betrachtet. Für die Eingangsdaten werden 40 Filterbanken verwendet.
- Diese werden benötigt, um die Daten samplen zu können. Dadurch entsteht eine Menge 26 Knoten innerhalb der Input-Schicht. Um unerwünschte Latenzzeiten der Frames zu vermeiden wird ein asymmetrischer Kontext verwendet. Die Hidden-Schichte beträgt hier vier Ebenen mit einer Gesamtzahl von 2560 Units. Die Output-Schicht enthält wie bereits erwähnt eine Softmax-Konfiguration, welche eine Dimension der Anzahl der Zielsprachen besitzt.
+Die Netztopologie beschreibt die Infrastruktur des Netzes. Die Auswahl der Topologie bestimmt die Qualität des Trainingsvorgangs, d. h. die Anzahl der Neuronen. Eine zu geringe Anzahl führt zu einem niedrigen Klassifizierungsrate. Eine zu hohe Anzahl würde zu überhöhten Trainingsdauer führen. Aufgrund dessen fallen Topologien von Ansatz zu Ansatz unterschiedlich aus, welche unterschiedliche Spracherkennungsresultate liefern. In dieser Arbeit wird der Topologienvorschlag von Gonzales et al. betrachtet. Für die Eingangsdaten werden 40 Filterbanken verwendet. Diese werden benötigt, um die Daten samplen zu können. Als Input-Schicht wird werden 26 Knoten eingesetzt. Um unerwünschte Latenzzeiten der Frames zu vermeiden wird ein asymmetrischer Kontext verwendet. Die Hidden-Schicht beträgt vier Ebenen mit einer Gesamtzahl von 2560 Knoten. Die Output-Schicht enthält wie bereits erwähnt eine Softmax-Konfiguration, dessen Dimension der Anzahl der Zielsprachen entspricht. Dies ist bei der Erkennung von multilingualen Sprachen eine erforderliche Konfiguration.
  
 %\begin{figure*}[h!]
 %	\centering
@@ -67,7 +64,7 @@ Die Netztopologie beschreibt die Infrastruktur des Netzes. Die Auswahl der Topol
 %	\label{fig:topology}
 %\end{figure*}
 \subsection{Verbesserung des Trainingsverfahrens durch Multitasking learning (MTL)}
- Bei Machine Learning wird besonders wert gelegt, bestimmte Metriken, wie beispielsweise Klassifizierungs-Genauigkeit und Trainingsdauer, zu optimieren. Daraufhin wird das Modell soweit optimiert bis die Leistung des Modells nicht mehr gesteigert werden kann \cite{Ruder.2017}. Das Lernen  der einzelnen Sprachen läuft sequenziell ab. Hier setzt das Multitasking Learning (MTL) ein.  Hier werden mehrere Lernaufgaben gleichzeitig erledigt statt sequentiell, um das Trainingsvefahren effizienter zu gestalten. Das führt zu einer verbesserten Lerneffizienz und Vorhersagegenauigkeit. Im Klassifizierungskontext zielt MTL darauf ab, die Leistung mehrerer Klassifizierungsaufgaben zu verbessern, indem sie gemeinsam erlernt werden \cite{Lu_multitasklearning}. Ein Beispiel hierfür ist ein Spamfilter. Der Schlüssel zur erfolgreichen Anwendung von MTL besteht darin, dass die Aufgaben miteinander verknüpft werden können. Dies bedeutet nicht, dass die Aufgaben ähnlich sein müssen. Stattdessen bedeutet es, dass Aufgaben auf verschiedene Ebenen abstrahiert und geteilt werden. Wenn die Lernaufgaben tatsächlich ähnlich sind, können sie gemeinsam gelernt werden. Dabei kann das Wissen zwischen Aufgaben auf andere Lernaufgaben übertragen werden, welches die Trainingsdauer deutlich verkürzt. MTL ist vor allem dann nützlich, wenn die Größe des Trainingssatzes im Vergleich zur Modellgröße klein ist. Dabei wird grundsätzlich zwei Arten von MTL unterschieden: Hard parameter sharing und soft parameter sharing. \\ \\ Hard parameter sharing stellt das meist genutzte Art dar\cite{Ruder.2017}. Es wird normalerweise auf die hidden-Schicht angewendet, indem die Aufgaben gemeinsam gelernt werden, während die spezifischen Aufgaben separat gelernt werden. Dies wird in Abbildung \ref{fig:hard} dargestellt. Dieser Ansatz reduziert das Risiko von Overfitting erheblich. Je mehr Aufgaben gleichzeitig gelernt wird, desto mehr muss das Modell eine Repräsentation finden, die alle Aufgaben erfassen muss. Dadurch ist die Chance auf Overfitting deutlich geringer.
+ Bei maschinelles Lernen wird der Fokus gesetzt, bestimmte Metriken, wie beispielsweise Klassifizierungsgenauigkeit und Trainingsdauer, zu optimieren. Daraufhin wird das Modell soweit optimiert, bis die Leistung des Modells nicht mehr gesteigert werden kann \cite{Ruder.2017}. Das Lernen der einzelnen Sprachen läuft sequenziell ab. Hier setzt das Multitasking Learning (MTL) ein. Es werden mehrere Lernaufgaben gleichzeitig erledigt statt sequentiell, um das Trainingsvefahren effizienter zu gestalten. Das führt zu einer verbesserten Lerneffizienz und Vorhersagegenauigkeit. Im Klassifizierungskontext zielt MTL darauf ab, die Leistung mehrerer Klassifizierungsaufgaben zu verbessern, indem sie gemeinsam erlernt werden \cite{Lu_multitasklearning}. Ein Beispiel hierfür ist ein Spamfilter. Der Schlüssel zur erfolgreichen Anwendung von MTL besteht darin, dass die Aufgaben miteinander verknüpft werden können. Dies bedeutet nicht, dass die Aufgaben ähnlich sein müssen. Stattdessen bedeutet es, dass Aufgaben auf verschiedene Ebenen abstrahiert und geteilt werden. Wenn die Lernaufgaben tatsächlich ähnlich sind, können sie gemeinsam gelernt werden. Dabei kann das Wissen zwischen Aufgaben auf andere Lernaufgaben übertragen werden, welches die Trainingsdauer deutlich verkürzt. MTL ist vor allem dann nützlich, wenn die Größe des Trainingssatzes im Vergleich zur Modellgröße klein ist. Dabei wird grundsätzlich zwei Arten von MTL unterschieden: Hard parameter sharing und soft parameter sharing. \\ \\ Hard parameter sharing stellt das meist genutzte Art dar\cite{Ruder.2017}. Es wird normalerweise auf die Hidden-Schicht angewendet, indem die Aufgaben gemeinsam gelernt werden, während die spezifischen Aufgaben separat gelernt werden. Dies wird in Abbildung \ref{fig:hard} dargestellt. Dieser Ansatz reduziert das Risiko von overfitting erheblich. Je mehr Aufgaben gleichzeitig gelernt wird, desto mehr muss das Modell eine Repräsentation finden, die alle Aufgaben erfassen muss. Dadurch ist die Chance auf overfitting deutlich geringer \cite{Ruder.2017} \cite{Lu_multitasklearning}.
   \begin{figure}[h!]
  	\centering
  	\includegraphics[width=0.8\linewidth]{images/hard}
