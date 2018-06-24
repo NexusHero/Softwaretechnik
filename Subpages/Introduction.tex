@@ -1,31 +1,18 @@
 \section{Einführung}\label{sec:introduction}
-\IEEEPARstart{S}ysteme zur Spracherkennung finden eine zunehmende Verbreitung und Beliebtheit in unserem alltäglichen Leben.
-Sie ermöglichen multimodale Interaktionen oder auch reine Voice Interfaces \cite{Harris.2004}.
-Das Anwendungsspektrum reicht von sprachgesteuerten Smarthome-Systemen über Smartphones hin zum Einsatz in Autos \cite{Yu.2014}.
-Bei weltweit über 7000 gesprochenen Sprachen ist es nur konsequent, multilinguale Spracherkennungssysteme zu entwickeln \cite{Gary.2018}.
-Eingesetzt werden diese bei Situationen, in denen die Sprache des Sprechers nicht bekannt oder für eine Sprache nur wenig
-Trainingsdaten vorhanden sind. In solch einem Fall kann die gemeinsame Nutzung von Phonemen, die fehlenden Daten ausgleichen [fehlt noch].
-Ein Phonem ist eine abstrakte Repräsentation aller Laute einer Sprache \citation{Zissman.2001}.
-Ziel dieser Ausarbeitung ist die Analyse der heutzutage üblichen Komponenten und Verfahren eines multilingualen Spracherkennungssystems.
-Im Fokus stehen Deep Neural Networks, wie dessen Modelle trainiert werden und welche Probleme es dabei gibt.
+\IEEEPARstart{S}ysteme zur Spracherkennung finden eine zunehmend größere Verbreitung und Beliebtheit in unserem alltäglichen Leben.
+Durch sie gibt es eine weitere Art der Interaktion mit den Geräten.
+Das Anwendungsspektrum reicht von sprachgesteuerten Smarthome-Systemen über Smartphones hin zum Einsatz in Autos. [1]
+Bei weltweit über 7000 gesprochenen Sprachen ist es nur konsequent, multilinguale Spracherkennungssysteme zu entwickeln.
+Eingesetzt werden diese bei Situationen, in denen die Sprache des Sprechers nicht bekannt ist oder für eine Sprache nur wenig
+Trainingsdaten vorhanden sind. In solch einem Fall kann die gemeinsame Nutzung von Phonemen, die fehlenden Daten ausgleichen. [3]
 
 \subsection{Pipeline}
-Die Abbildung \ref{fig:pipeline} zeigt die Komponenten, aus dem ein multilinguales Spracherkennungssystem besteht.
-Am Anfang steht ein analoges Audiosignal das digitalisiert wird. Aus diesen Daten werden aus kleinen Sequenzen
-Feature-Vektoren extrahiert. In Abbildung \ref{fig:pipeline} ist als Beispielausgabe für diesen Teilschritt ein Spektrogramm dargestellt – bei dem die einzelnen Frequenzen bildlich dargestellt werden.
-Die Feature-Vektoren müssen so gewählt werden, dass die kleinste effizienteste Menge für die Sprachverarbeitung
-entsteht und unnötige Informationen bereits vor dem Decoder herausgefiltert werden.
-Die gewonnenen Feature-Vektoren werden als Eingabe für die Sprachidentifikation genutzt. Die Information
-über die identifizierte Sprache kombiniert mit den Feature-Vektoren bilden die Eingabe für den Decoder. Der Decoder bildet aus dieser Eingabe,
-dem Akkustik-, Sprach- und Lexikalmodell den gesprochenen Text. Die drei Modelle werden von \cite{Tom.2016} wie folgt beschrieben:
-
-\begin{itemize}
-    \item \textit{Akkustikmodell.} Die gesprochene Sprache wird abgebildet durch einzelne Phoneme.
-    \item \textit{Lexikalmodell.} Alle gültigen Wörter einer Sprache.
-    \item \textit{Sprachmodell.} Die Wahrscheinlichkeit für einen syntaktisch und semantisch korrekten Satz.
-            Beispielsweise folgt auf das englische Wort \glqq{thank}\grqq{} mit einer sehr hohen Wahrscheinlichkeit das Wort \glqq{you}\grqq{} oder
-        \glqq{god}\grqq{}.
-\end{itemize}
+Aus welchen Komponenten und Prozessen besteht ein System zur Spracherkennung?
+Traditionelle Systeme mit beispielsweise HMM und GMM, sowie der Einsatz von neuronalen Netzen.
+Zu Beginn einer solchen Pipeline steht das analoge Audiosignal, das in ein digitales umgewandelt wird.
+Diese Daten werden dann vorverarbeitet. Eine möglicher Schritt ist die Umwandlung in die einzelnen Frequenzen.
+In einem Spektrogramm kann man die Daten abbilden – wie es in Abbildung \ref{fig:pipeline} zu sehen ist.
+Nach der Vorverarbeitung werden die einzelnen Frequenzen als Features in das
 
 \begin{figure}[h!]
     \centering

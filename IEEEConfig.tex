@@ -1,0 +1,68 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage[nocompress]{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{ngerman}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{float}
+%\usepackage[breaklinks]{hyperref}
+\usepackage{url}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+	
+	\title{Multilinguale Spracherkennung mit tiefen neuronalen
+	Netzen\\
+	}
+	
+	\author{\IEEEauthorblockN{1\textsuperscript{st} Björn Beha}
+		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+			\textit{name of organization (of Aff.)}\\
+			City, Country \\
+			email address}
+		\and
+		\IEEEauthorblockN{2\textsuperscript{nd} Philipp Ginter}
+		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+			\textit{name of organization (of Aff.)}\\
+			City, Country \\
+			email address}
+		\and
+		\IEEEauthorblockN{3\textsuperscript{rd} Suhay Sevinc}
+		\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+			\textit{name of organization (of Aff.)}\\
+			City, Country \\
+			email address}
+	}
+	
+	\maketitle
+	
+	\begin{abstract}
+	Dieser Artikel beschäftigt sich mit dem Ansatz des tiefen maschinellen Lernens im Bereich der multilingualen Spracherkennung.	Die Arbeit setzt sich mit der Forschungsfrage auseinander, welches Verfahren heute genutzt wird, um aktuelle Spracherkennungssysteme zu realisieren. Aus dieser Untersuchung geht hervor, dass die Genauigkeit der heutigen Spracherkennung über Long short-term memory-Netzwerke erreicht wird, die sich an vorherige Ereignisse erinnern können. Die Arbeit zeigt, warum diese Art von neuronalen Netzen ideal für Sequenzen von Tönen geeignet ist. In diesem Kontext wird untersucht, wie die Erkennung mehrerer Sprachen funktioniert, auch wenn nur geringe Mengen an Trainingsdaten verfügbar sind. Vor allem diese Knappheit von Ressourcen stellt eine Herausforderung dar, da ohne eine Menge von markierten Datensätzen keine Muster und Gesetzmäßigkeiten der Sprache erkannt und beurteilt werden können. Die Abhandlung zeigt, dass dies über das gemeinsame Nutzen einzelner Töne gelöst wird und wie sich ein solches System trainieren lässt. Weiterhin bestehende Herausforderungen werden diskutiert und es wird geklärt, welche Ansätze man in Zukunft verfolgt, um eine natürliche Interaktion zwischen Mensch und Maschine zu ermöglichen.
+	\end{abstract}
+	
+	\begin{IEEEkeywords}
+		Tiefes Lernen, tiefe neuronale Netze, Spracherkennung, Recurrent Neural Netzworks, Long short-term memory, LSTM 
+	\end{IEEEkeywords}
+	
+
+	
+	\input{Subpages/Title}
+	\input{Subpages/Introduction}
+	\input{Subpages/Sprachidentifikation}
+	\input{Subpages/Spracherkennung}
+	\input{Subpages/Trainingsverfahren}
+	\input{Subpages/Conclusion}
+	
+	\bibliographystyle{IEEEtran}
+	\bibliography{references}
+	
+	% that's all folks
+\end{document}
