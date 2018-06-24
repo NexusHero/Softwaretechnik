@@ -1,11 +1,7 @@
 \section{Sprachidentifikation}
-\subsection{Überblick}
-Systeme zur Sprachidentifikation werden eingesetzt um die Sprache eines Audiosignals zu klassifizieren. Üblicherweise ist dies der erste Schritt in automatischen multilingualen Spracherkennungssystemen.
-Ohne die richtige Ausgangssprache, können Ausdrücke und Grammatikregeln nicht erkannt werden können \cite{Bartz.2017}.
-Die Einsatzgebiete lassen sich laut Zissman et al. \cite{Zissman.2001} in zwei Kategorien einteilen. Zum Einen ist es die Vorverarbeitung für maschinelle Systeme und zum Anderen für menschliche Zuhörer. Ein Beispiel für ersteres könnte ein sprachgesteuertes System – an einem Flughafen - zur Flugauskunft sein. Ohne menschliches Zutun könnte das System zuerst die Sprachidentifikation ausführen und danach mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennen.
-Eine Vorverarbeitung für menschliche Zuhörer könnte ein Notrufsystem sein, bei dem zuerst die Sprache des Anrufers erkannt. Anhand dieser wird der Anruf dann an einen Mitarbeiter der für diese Sprache zuständig ist weitergeleitet. Besonders relevant ist solch ein System, da in einem Notfall jede Minute über Leben und Tod entscheiden kann.
-
-\subsection{Wie wird eine Sprache identifiziert?}
+Systeme zur Sprachidentifikation werden eingesetzt um die Sprache eines Audiosignals zu klassifizieren. Um genauere Vorhersagen zu treffen ist dies der erste Schritt in multilingualen Spracherkennungssystemen. Erst mit der Identifikation können eingehende Laute entsprechend zugeordnet werden. Ausdrücke und Grammatikregeln lassen sich somit Ableiten und erhöhen die Präzision der Systeme \cite{Bartz.2017}.
+Die Einsatzgebiete lassen sich laut Zissman et al. \cite{Zissman.2001} in zwei Kategorien einteilen, dem Vorverarbeiten für maschinelle Systeme und die Vorverarbeitung für menschliche Zuhörer. Unter ersterem wird ein sprachgesteuertes System verstanden, welches beim Einsprechen des Texts die Identifikation durchführt um anschließend mithilfe des korrekten Sprachmodells die gesprochene Sprache erkennt. Eine Vorverarbeitung für menschliche Zuhörer geht gleich vor. Der Unterschied liegt darin, dass die weitere Verarbeitung nicht von der Maschine vorgenommen wird, sondern durch einen Menschen. Die Erkennung dient nur zum entsprechenden Delegieren.  
+\\
 Eine Sprache wird von Menschen und Maschinen anhand der Unterschiede zwischen den Sprachen identifiziert. Zissman et al. \cite{Zissman.2001} nennt als Unterschiede die folgenden vier Charakteristika:
 \begin{itemize}
 \item \textit{Phonologie.} Hier wird die Häufigkeit und Verteilung von Phonemen und Phonen betrachtet. Ein Phon ist der tatsächlich produzierte Ton, der beim Sprechen entsteht.
