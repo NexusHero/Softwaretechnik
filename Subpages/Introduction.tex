@@ -15,12 +15,18 @@ Ein multilinguales Spracherkennungssystem besteht aus mehreren Komponenten. Abbi
 Die drei Modelle werden von \cite{Tom.2016} wie folgt beschrieben:
 
 \begin{itemize}
-    \item \textit{Akkustikmodell.} Die gesprochene Sprache wird abgebildet durch einzelne Phoneme.
-    \item \textit{Lexikalmodell.} Alle gültigen Wörter einer Sprache.
-    \item \textit{Sprachmodell.} Die Wahrscheinlichkeit für einen syntaktisch und semantisch korrekten Satz.
-    Beispielsweise folgt auf das englische Wort \glqq{thank}\grqq{} mit einer sehr hohen Wahrscheinlichkeit das Wort \glqq{you}\grqq{} oder
-    \glqq{god}\grqq{}.
+    \item \textit{Akkustikmodell.} Die Menge an Daten, die das neuronale Netz darüber informiert wie die Zusammenhänge zwischen Phonemen und einem konkreten Audiosignal sind. Die Phoneme können
+                    sowohl kontextabhängig als auch kontextfrei sein.
+                    Erlernt wird das Modell durch Audioaufnahmen und den zugehörigen Abschriften – die akkustischen Trainingsdaten.
+    \item \textit{Lexikalmodell.} Dieses Modell bildet eine Sequenz von Phonemen – die durch das Akustikmodell gewonnenen wurden – auf gültige Wörter einer Sprache ab. Hierfür werden textuelle Trainingsdaten eingesetzt.
+    \item \textit{Sprachmodell.} Die Wahrscheinlichkeit für einen syntaktisch und semantisch korrekten Satz wird genutzt um aus Sequenzen von Wörtern – die durch das Lexikalmodell gewonnen wurden – gültige Wortsequenzen zu bilden.
+                    Beispielsweise folgt auf das englische Wort \glqq{thank}\grqq{} mit einer sehr hohen Wahrscheinlichkeit das Wort \glqq{you}\grqq{} oder
+                    \glqq{god}\grqq{}. Für das Training dieses Modells werden textuelle Trainingsdaten eingesetzt.
 \end{itemize}
+
+Jedes dieser drei Modelle muss separat trainiert werden. Das führt zu einer erhöhten Komplexität verglichen mit dem Trainieren eines einzelnen gemeinsamen Modells.
+Darum wird in den letzten Jahren vermehrt der Ansatz verfolgt, Ende-zu-Ende-Systeme zu entwickeln. Dabei werden die drei Modelle als ein System trainiert und eingesetzt.
+Chan et al. \cite{Chan.2015} und Prabhavalkar et al. \cite{Prabhavalkar.2017} zeigen hierzu verbesserte Ergebnisse, verglichen mit mehreren Systemen mit einzelnen Modellen.
 
 \begin{figure}[h!]
     \centering
@@ -28,10 +34,3 @@ Die drei Modelle werden von \cite{Tom.2016} wie folgt beschrieben:
     \caption{Pipeline eines Spracherkennungssystems (Eigene Darstellung, in Anlehnung an: \cite{Tom.2016}) }%\cite{??}}
     \label{fig:pipeline}
 \end{figure}
-
-Die Trainingsdaten für die beschriebenen Modelle werden in die folgenden zwei Gruppen unterteilt \cite{Tom.2016}:
-
-\begin{itemize}
-    \item \textit{Akkustische Trainingsdaten.} Diese Daten werden genutzt um das Eingangssignal auf Phoneme abzubilden.
-    \item \textit{Textuelle Trainingsdaten.} Bilden Grammatik und semantische Informationen in den Modellen ab.
-\end{itemize}
