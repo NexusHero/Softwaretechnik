@@ -1,6 +1,6 @@
 \section{Sprachidentifikation}
-Systeme zur Sprachidentifikation werden eingesetzt um die Sprache eines Audiosignals zu klassifizieren. Um genauere Vorhersagen zu treffen, ist dies der erste Schritt in multilingualen Spracherkennungssystemen. Erst mit der Identifikation können eingehende Laute entsprechend zugeordnet werden. Ausdrücke und Grammatikregeln lassen sich somit ableiten und erhöhen die Präzision der Systeme \cite{Bartz.2017}.
-Die Einsatzgebiete lassen sich laut Zissman et al. \cite{Zissman.2001} in zwei Kategorien einteilen. Dazu zählen die Vorverarbeiten für maschinelle Systeme und die Vorverarbeitung für menschliche Zuhörer. Unter ersterem wird ein sprachgesteuertes System verstanden, welches beim Einsprechen des Texts die Identifikation durchführt um anschließend mithilfe des korrekten Sprachmodells die gesprochene Sprache zu erkennen. Eine Vorverarbeitung für menschliche Zuhörer geht gleich vor. Der Unterschied liegt darin, dass die weitere Verarbeitung nicht von der Maschine vorgenommen wird, sondern durch einen Menschen. Die Erkennung dient nur zum entsprechenden Delegieren.
+Systeme zur Sprachidentifikation werden eingesetzt, um die Sprache eines Audiosignals zu klassifizieren. Um genauere Vorhersagen zu treffen, ist dies der erste Schritt in multilingualen Spracherkennungssystemen. Erst mit der Identifikation können eingehende Laute entsprechend zugeordnet werden. Ausdrücke und Grammatikregeln lassen sich somit ableiten und erhöhen die Erkennungsgenauigkeit der Systeme \cite{Bartz.2017}.
+Die Einsatzgebiete lassen sich laut Zissman et al. \cite{Zissman.2001} in zwei Kategorien einteilen. Dazu zählen die Vorverarbeiten für maschinelle Systeme und die Vorverarbeitung für menschliche Zuhörer. Unter ersterem wird ein sprachgesteuertes System verstanden, welches beim Einsprechen des Texts die Identifikation durchführt, um anschließend mithilfe des korrekten Sprachmodells die gesprochene Sprache zu erkennen. Eine Vorverarbeitung für menschliche Zuhörer geht gleich vor. Der Unterschied liegt darin, dass die weitere Verarbeitung nicht von der Maschine vorgenommen wird, sondern durch einen Menschen.
 \\
 Eine Sprache lässt sich anhand gewisser Unterschiede identifizieren. Zissman et al. \cite{Zissman.2001} nennen als Unterschiede folgende Charakteristika:
 \begin{itemize}
@@ -11,17 +11,17 @@ Eine Sprache lässt sich anhand gewisser Unterschiede identifizieren. Zissman et
 \end{itemize}
 
 \subsection{Architektur}
-Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. Gonzalez-Dominguez et al. \cite{Gonzalez.2015} unterscheiden hierbei zwischen drei möglichen Umsetzungen.
-Die erste Umsetzung ist das Trainieren eines universalen Modells, indem alle Sprachen als Eingabe möglich sind. Die Hidden Layer eines neuronalen Netzes teilen sich die Repräsentationen der Phoneme. In den Ausgabeschichten wird die Sprache erkannt \cite{Yu.2014}. 
-Vorteile ergeben sich durch die gemeinsame Nutzung von Phonemen, wie im nächsten Kapitel gezeigt wird. Möchte man eine neue Sprache trainieren, so kann man auf die bereits vorhandenen Strukturen aufbauen.
-Das System erreicht somit nicht die Komplexität mehrerer monolingualer Systeme\cite{Bartz.2017}.
-
-Eine weitere Möglichkeit eine Sprache zu identifizieren, ist der Einsatz eines dedizierten Systems. In Abbildung \ref{fig:pipeline} ist dieser Architekturansatz dargestellt. Hierbei wird anhand eines Teilstückes des Eingabesignals die Sprache bestimmt. Niesler et al. \cite{Niesler.2006} geben für dieses Teilstück eine durchschnittliche Dauer von 2,3 Sekunden an, bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit zunimmt. Für die die konkrete Implementierung eines dedizierten Systems zur Sprachidentifikation gibt es mehrere Ansätze \cite{Niesler.2006}. Neben dem Einsatz eines Gaussian mixture models (GMM) kann hierfür auch ein neuronales Netz eingesetzt werden.
-Diese beiden Ansätze lassen sich wiederum in zwei Kategorien unterteilen. Die Erkennung von Wörtern oder Phons.
-Ein Nachteil der Spracherkennung anhand eines Teilstückes ist die erhöhte Latenz. Diese kann abhängig von der zu erzielenden Genauigkeit unterschiedlich lang sein. Sollte die Sprache in diesem Schritt falsch erkannt worden sein,
-breitet sich der Fehler weiter aus und führt zu einem falschen Resultat.
-
-Die dritte Möglichkeit setzt auf mehrere monolinguale Spracherkennungssysteme \cite{Gonzalez.2015}.
+Die Umsetzung der Sprachidentifikation spiegelt sich in der gewählten Architektur eines automatischen Spracherkennungssystems wieder. Gonzalez-Dominguez et al. \cite{Gonzalez.2015} unterscheiden hierbei zwischen drei möglichen Umsetzungen.\\
+Eine Möglichkeit eine Sprache zu identifizieren, ist der Einsatz eines dedizierten Systems. In Abbildung \ref{fig:pipeline} ist dieser Architekturansatz dargestellt. Hierbei wird anhand eines Teilstückes des Eingabesignals die Sprache bestimmt. Niesler et al. \cite{Niesler.2006} geben für dieses Teilstück eine durchschnittliche Dauer von 2.3 Sekunden an, bestätigt jedoch auch, dass mit zunehmender Länge die Genauigkeit steigt. Für die die konkrete Implementierung eines dedizierten Systems zur Sprachidentifikation gibt es mehrere Ansätze \cite{Niesler.2006}. Neben dem Einsatz eines Gaussian Mixture Models (GMM) kann hierfür auch ein neuronales Netz eingesetzt werden. Ein Nachteil der Spracherkennung anhand eines Teilstückes ist die erhöhte Latenz. Diese kann abhängig von der zu erzielenden Genauigkeit unterschiedlich lang sein. Sollte die Sprache in diesem Schritt falsch erkannt worden sein, breitet sich der Fehler weiter aus und führt zu einem falschen Resultat.\\
+Eine weitere Möglichkeit setzt auf mehrere monolinguale Spracherkennungssysteme \cite{Gonzalez.2015}.
 Das Eingangssignal wird simultan von mehreren Systemen mit jeweils eigenen Modellen verarbeitet.
 Anhand der größten Übereinstimmung mit einer Sprache wird am Ende die passende Sprache ausgewählt.
-Das löst die Probleme des vorherigen Ansatzes. Nachteilig ist der erhöhte Rechenaufwand durch dein Einsatz mehrerer Systeme. 
+Das löst die Probleme des vorherigen Ansatzes. Nachteilig ist der erhöhte Rechenaufwand durch dein Einsatz mehrerer Systeme. \\
+Die Umsetzung, auf die sich diese Arbeit konzentriert, geht vom Trainieren eines universellen Modells aus. Dies wird erreicht, indem alle Sprachen als Eingabe infrage kommen. Die Hidden Layer eines neuronalen Netzes teilen sich die Repräsentationen der Phoneme. In den Ausgabeschichten wird die Sprache erkannt \cite{Yu.2014}. 
+Vorteile ergeben sich durch die gemeinsame Nutzung von Phonemen, wie im nächsten Kapitel gezeigt wird. Soll eine neue Sprache antrainiert werden, so kann auf bereits vorhandenen Strukturen zurückgegriffen bzw. aufgebaut werden.
+Das System erreicht somit nicht die Komplexität mehrerer monolingualer Systeme\cite{Bartz.2017}.
+
+
+
+
+
